@@ -37,17 +37,18 @@ export default {
 <style>
 
 .master-item{
-    padding: 20px;
+    padding: 50px;
     background-color: #fff;
     border-radius: 5px;
     border: 1px solid #dfe3e8;
     box-sizing: border-box;
     cursor: pointer;
-    translate: all 0.25s ease;
+    margin-top: 10px;
+ 
 }
 
 .master-item:hover{
-    transform: scale(1.1,1);
+    background-color: #0fe368;
 }
 
 .master-item__user{
