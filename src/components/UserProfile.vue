@@ -1,57 +1,36 @@
 <template>
   <div class="user-profile">
-    <div class="user-profile__user-panel">
+    <div class="user-profile__sidebar">
+      <div class="user-profile__user-panel">
       <h1 class="user-profile__username">@{{ user.username }} </h1>
       <div class="user-profile__admin-badge" v-if="user.isAdmin">
         Admin
       </div>
       <div class="user-profile__follower-count">
         <strong>Followers: </strong> {{ followers }}
-      <button @click="followUser">Follow</button>
       </div>
-      <form class="user-profile__create-master" @submit.prevent="createNewMaster">
-        <label for="newMaster"><strong>new Tweet</strong></label>
-        <textarea name="" id="newMaster" cols="30" rows="10" v-model="newMasterContent"></textarea>
-
-        <div class="user-profile__create-master-type">
-          <label for="newMastetType"><strong>Type: </strong></label>
-          <select name="" id="newMasterType" v-model="selectedMasterType">
-            <option :value="option.value" 
-            v-for="(option,index) in masterTypes" :key="index">
-              {{ option.name }}
-            </option>
-          </select>
-        </div>
-        <button type="submit">
-          tweet
-        </button>
-      </form>
     </div>
-    <div class="user-profile__master-wrapper">
-      <MasterItem 
-      v-for="master in user.masters" 
-      :key="master.id" 
+    <CreatePostPanel @add-post="addPost"/> 
+    </div>
+    <div class="user-profile__posts-wrapper">
+      <PostItem 
+      v-for="post in user.posts" 
+      :key="post.id" 
       :username="user.username" 
-      :master="master" 
-      @favourite="toggleFavourite" />
+      :post="post" />
     </div>
   </div>
 </template>
 
 <script>
 
-import MasterItem from "./MasterItem";
+import PostItem from "./PostItem";
+import CreatePostPanel from "./CreatePostPanel";
 export default {
   name: 'UserProfile',
-  components : {MasterItem},
+  components : { CreatePostPanel, PostItem},
   data(){
     return{
-      newMasterContent: '',
-      selectedMasterType: 'instant',
-      masterTypes:[
-        {value: 'draft', name: 'Draft'},
-        {value: 'instant', name: 'Instant Master'}
-      ],
       followers : 0,
       user: {
         id : 1,
@@ -60,91 +39,56 @@ export default {
         lastName : 'doe',
         email : 'vueMaster@gmail.com',
         isAdmin : true,
-        masters: [
+        posts: [
           { id: 1, content: 'vue start'},
           { id: 2, content: "hello vue"}
         ]
       }
     } 
   },
-  watch: {
-    followers(newFollowerCount, oldFollowerCount){
-      if (oldFollowerCount < newFollowerCount){
-        console.log (`${this.user.username} has gained a follower!`)
-      }
-    }
-
-  },
-  computed :{
-    fullName() {
-      return `${this.user.firstName} ${this.user.lastName}`;
-    }
-  },
   methods: {
-    followUser(){
-      this.followers++
-    },
-    toggleFavourite(id) {
-      console.log(`Favourited Tweet #${id}`)
-    },
-    createNewMaster(){
-      if(this.newMasterContent && this.selectedMasterType !== 'draft'){
-        this.user.masters.unshift({
-          id: this.user.masters.length + 1,
-          content: this.newMasterContent
-        })
-        this.newMasterContent = '';
-      }
+    addPost(post){
+      this.user.posts.unshift({ id: this.user.posts.length + 1, content: post });
     }
-  },
-  mounted(){
-    this.followUser();
   }
-  
-}
+};
+
 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.user-profile{
+
+<style lang="scss" scoped>
+.user-profile {
+  
   display: grid;
   grid-template-columns: 1fr 3fr;
-  padding:50px 5%;
-}
-
-.user-profile__user-panel{
-  display: flex;
-  flex-direction: column;
-  margin-right: 50px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 5px;
-  border: 1px solid  #0fe368;
-}
-.user-profile__admin-badge{
-  /* border: 1px solid #0fe368; */
-  border-radius: 5px;
-  margin-right: auto;
-  background-color:green;
-  color: #fff;
-  padding: 0 10px;
-  font-weight: bold;
-}
-
-h1{
-  margin: 0;
-}
-
-.user-profile__masters-wrapper{
-  display: grid;
-  grid-gap: 10px;
-}
-
-.user-profile__create-master{
-  border-top: 1px solid #0fe368;
-  padding-top: 20px;
-  display:flex;
-  flex-direction: column;
+  grid-gap: 50px;
+  padding: 50px 5%;
+  .user-profile__user-panel {
+    
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #82f01c;
+    margin-bottom: auto;
+    h1 {
+      margin: 0;
+    }
+    .user-profile__admin-badge {
+      background: green;
+      color: white;
+      border-radius: 5px;
+      margin-right: auto;
+      padding: 0 10px;
+      font-weight: bold;
+    }
+  }
+  .user-profile__posts-wrapper {
+    display: grid;
+    grid-gap: 10px;
+    margin-bottom: auto;
+  }
 }
 </style>
