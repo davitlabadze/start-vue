@@ -5,7 +5,7 @@
         Blog
       </div>
       <div class="navigation__user">
-        {{ user.username }}
+        {{ state.user.username }}
       </div>
     </nav>
    <UserProfile/>
@@ -14,16 +14,21 @@
 
 <script>
 
+import { reactive } from 'vue';
 import UserProfile from "./components/UserProfile";
 
 export default {
   name: 'App',
   components : { UserProfile },
-  data(){
-    return {
-      user:{
+
+  setup(){
+   const state = reactive({
+     user:{
         username: 'vueMaster'
       }
+    })
+    return {
+      state
     }
   }
 }
@@ -36,14 +41,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color:#2c3e50;
   min-height: 100vh;
-  background-color: #f3f5fa;
+  background-color: #3a5169;
   
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 5%;
-    background-color: green;
+    background-color: #42b983;
     color: white;
     .navigation__logo {
       font-weight: bold;

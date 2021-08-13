@@ -38,4 +38,4 @@ export const users = [
       "isAdmin": false,
       "twoots": []
     }
-  ];
+];

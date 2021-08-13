@@ -31,15 +31,16 @@ export default {
 
 <style lang="scss" scoped>
 .post-item {
-  padding: 20px;
-  background-color: white;
-  border-radius: 5px;
-  border: 1px solid #82f01c;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  &:hover {
-    background-color:green;
+    padding: 20px;
+    background-color: #1d2935;
+    color:#fff;
+    border-radius: 5px;
+    border: 1px solid #42b983;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    &:hover {
+    background-color:#42b983;
   }
   .post-item__user {
     font-weight: bold;
