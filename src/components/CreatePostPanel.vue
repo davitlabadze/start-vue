@@ -99,6 +99,11 @@ export default {
       color: white;
       font-weight: bold;
     }
+
+    option{
+      background-color:blue;
+      color:red;
+    }
   }
   &.--exceeded {
     color: red;

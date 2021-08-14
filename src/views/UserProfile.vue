@@ -23,36 +23,37 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
-import PostItem from "./PostItem";
-import CreatePostPanel from "./CreatePostPanel";
+import { reactive, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { users } from "../assets/users";
+import PostItem from "../components/PostItem.vue";
+import CreatePostPanel from "../components/CreatePostPanel.vue";
+
 export default {
   name: 'UserProfile',
   components : { CreatePostPanel, PostItem},
 
   setup(){
+
+    const route = useRoute();
+    const userId = computed(() => route.params.userId);
+
+    //if(userId) fetchUserFromApi(userId)
+
+
+
     const state = reactive({
       followers : 0,
-      user: {
-        id : 1,
-        username : 'vueMaster',
-        firstName : 'john',
-        lastName : 'doe',
-        email : 'vueMaster@gmail.com',
-        isAdmin : true,
-        posts: [
-          { id: 1, content: 'vue start'},
-          { id: 2, content: "hello vue"}
-        ]
-      }
-    })
+      user: users[userId.value -1] || users[0]
+    });
 
     function addPost(post){
       state.user.posts.unshift({ id: state.user.posts.length + 1, content: post });
     }
     return {
       state,
-      addPost
+      addPost,
+      userId
     }
   }
 };

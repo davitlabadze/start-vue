@@ -1,26 +1,27 @@
 <template>
   <div id="App">
     <nav>
-      <div class="navigation__logo">
-        Blog
-      </div>
+      <router-link to="/">
+        <div class="navigation__logo">
+          Blog
+        </div>
+      </router-link>
+      
       <div class="navigation__user">
         {{ state.user.username }}
       </div>
     </nav>
-   <UserProfile/>
+   <!-- <UserProfile/> -->
+   <router-view/>
   </div>
 </template>
 
 <script>
-
 import { reactive } from 'vue';
-import UserProfile from "./components/UserProfile";
-
+// import UserProfile from "./components/UserProfile";
 export default {
   name: 'App',
-  components : { UserProfile },
-
+  // components : { UserProfile },
   setup(){
    const state = reactive({
      user:{
