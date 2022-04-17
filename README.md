@@ -1,5 +1,6 @@
 # hello-vue-app
 
+
 ## Project setup
 ```
 npm install
@@ -9,4 +10,7 @@ npm install
 ```
 npm run serve
 ```
+
+## Apps looks like
+![alt](screen.png)
 
